@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Doctor Agent — Kasallik varaqasi</title>
+<style>
+:root{--bg:#f3f7f6;--card:#fff;--ink:#16302b;--mute:#5d746f;--line:#cfdcd9;--brand:#0e7c6b;--red:#e0262b;--body:#e6eeec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1a18;--card:#172623;--ink:#e6f1ee;--mute:#93aca6;--line:#2b403b;--brand:#3cc2ab;--body:#223632}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1a18;--card:#172623;--ink:#e6f1ee;--mute:#93aca6;--line:#2b403b;--brand:#3cc2ab;--body:#223632}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--brand);padding-bottom:12px;margin-bottom:16px}
+.logo{width:46px;height:46px;border-radius:12px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:30px;font-weight:700;line-height:1}
+h1{margin:0;font-size:26px;line-height:1.1}
+header p{margin:0;color:var(--mute);font-size:14px}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+.sec h2{margin:0 0 10px;font-size:17px;color:var(--brand)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+label{display:block;font-size:13px;color:var(--mute);margin-bottom:3px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:8px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+textarea{min-height:70px;resize:vertical}
+.full{grid-column:1/-1}
+.bodies{display:flex;flex-wrap:wrap;gap:18px;justify-content:center}
+.fig{text-align:center;font-size:14px;color:var(--mute)}
+svg{width:210px;max-width:44vw;height:auto}
+.r{fill:#efc9a8;stroke:#b3865f;stroke-width:1.5;stroke-linejoin:round;cursor:pointer}.d{fill:none;stroke:#9a6f4e;stroke-width:1.2;stroke-linecap:round;pointer-events:none}.h{fill:#3a2a20;pointer-events:none}.e{fill:#3a2a20;pointer-events:none}.ear{fill:#efc9a8;stroke:#b3865f;stroke-width:1.2;pointer-events:none}
+.r:hover{fill:#f2a3a5}
+.r.on{fill:var(--red);stroke:#8d1216}
+#chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:28px;justify-content:center}
+.chip{background:var(--red);color:#fff;border-radius:99px;padding:2px 10px;font-size:13px}
+.hint{text-align:center;color:var(--mute);font-size:13px;margin:0 0 8px}
+.chk{display:flex;flex-wrap:wrap;gap:6px 14px}
+.chk label{display:flex;align-items:center;gap:6px;color:var(--ink);font-size:14px;margin:0}
+.chk input{width:auto}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+button{font:inherit;font-weight:600;border:0;border-radius:8px;padding:10px 16px;cursor:pointer;background:var(--brand);color:#fff}
+button.alt{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
+output{display:block;color:var(--mute);font-size:14px;margin-top:8px}
+@media print{header p,.btns,.hint,output{display:none}body{background:#fff}.sec{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">+</div>
+  <div><h1>Doctor Agent</h1><p>Kasallik varaqasi</p></div>
+</header>
+
+<section class="sec">
+<h2>Bemor maʼlumotlari</h2>
+<div class="grid">
+  <div class="full"><label for="fio">Ism, familiya, otasining ismi</label><input id="fio"></div>
+  
+  
+  <div><label for="age">Yoshi</label><input id="age" type="number" min="0" max="120"></div>
+  <div><label for="sex">Jinsi</label><select id="sex"><option value="">Tanlang</option><option>Erkak</option><option>Ayol</option></select></div>
+  <div><label for="date">Qabul sanasi</label><input id="date" type="date"></div>
+  
+  
+  
+  
+</div>
+</section>
+
+<section class="sec">
+<h2>Ogʻriyotgan joyni belgilang</h2>
+<p class="hint">Tanadagi qismni bosing — qizil boʻladi. Qayta bossangiz oʻchadi.</p>
+<div class="bodies">
+  <div class="fig"><svg id="front" viewBox="0 0 200 420" aria-label="Old tomon"></svg>Old tomon</div>
+  <div class="fig"><svg id="back" viewBox="0 0 200 420" aria-label="Orqa tomon"></svg>Orqa tomon</div>
+</div>
+<div id="chips"></div>
+</section>
+
+<section class="sec">
+<h2>Shikoyat</h2>
+<div class="grid">
+  <div class="full"><label for="main">Asosiy shikoyat (nima bezovta qilyapti?)</label><textarea id="main"></textarea></div>
+  <div><label for="since">Qachondan beri?</label><input id="since" placeholder="masalan: 3 kun"></div>
+  
+  <div><label for="pain">Ogʻriq darajasi: <b id="pv">0</b>/10</label><input id="pain" type="range" min="0" max="10" value="0"></div>
+  
+  
+  
+</div>
+<p style="margin:12px 0 6px;font-size:14px;color:var(--mute)">Ogʻriq turi va hamroh belgilar</p>
+<div class="chk" id="sym">
+  <label><input type="checkbox">Sanchiydi</label><label><input type="checkbox">Qisadi</label><label><input type="checkbox">Yonadi</label><label><input type="checkbox">Uvishadi</label><label><input type="checkbox">Doimiy</label><label><input type="checkbox">Xurujsimon</label>
+  <label><input type="checkbox">Isitma</label><label><input type="checkbox">Yoʻtal</label><label><input type="checkbox">Koʻngil aynishi</label><label><input type="checkbox">Bosh aylanishi</label><label><input type="checkbox">Holsizlik</label>
+</div>
+</section>
+
+<section class="sec">
+<h2>Sogʻliq tarixi</h2>
+<div class="grid">
+  <div class="full"><label for="chron">Surunkali kasalliklar (qand, bosim, yurak, astma...)</label><textarea id="chron"></textarea></div>
+  <div class="full"><label for="drugs">Hozir ichayotgan dorilar</label><textarea id="drugs"></textarea></div>
+  <div><label for="allergy">Allergiya (dori, ovqat)</label><input id="allergy"></div>
+  
+  
+  <div><label for="preg">Homiladorlik (ayollar uchun)</label><select id="preg"><option value="">Tanlang</option><option>Yoʻq</option><option>Ha</option><option>Emizikli</option></select></div>
+  
+  
+  
+  <div class="full"><label for="note">Qoʻshimcha maʼlumot</label><textarea id="note"></textarea></div>
+</div>
+</section>
+
+<section class="sec">
+<h2>Shifokor uchun</h2>
+<div class="grid">
+  <div><label for="doc">Shifokor ismi</label><input id="doc"></div>
+  <div><label for="diag">Dastlabki tashxis</label><input id="diag"></div>
+  
+</div>
+</section>
+
+<div class="btns">
+  <button id="copy">Matnni nusxalash</button>
+  <button class="alt" id="print">Chop etish / PDF</button>
+  <button class="alt" id="clear">Tozalash</button>
+</div>
+<output id="msg" role="status"></output>
+</div>
+
+<script>
+var P={
+head:"M100 6 C117 6 127 20 127 38 C127 54 117 68 100 70 C83 68 73 54 73 38 C73 20 83 6 100 6Z",
+neck:"M90 62 C90 72 88 78 85 88 L115 88 C112 78 110 72 110 62Z",
+chest:"M85 86 C70 88 62 90 58 98 C56 116 60 132 64 146 L136 146 C140 132 144 116 142 98 C138 90 130 88 115 86Z",
+abd:"M64 146 L136 146 C137 160 138 172 136 188 L64 188 C62 172 63 160 64 146Z",
+pel:"M64 188 L136 188 C140 200 142 210 142 220 C132 230 118 234 100 234 C82 234 68 230 58 220 C58 210 60 200 64 188Z",
+uaL:"M56 92 C44 92 36 98 34 110 C32 128 30 146 28 164 L50 168 C52 150 56 134 60 118 C62 108 62 98 56 92Z",
+uaR:"M144 92 C156 92 164 98 166 110 C168 128 170 146 172 164 L150 168 C148 150 144 134 140 118 C138 108 138 98 144 92Z",
+faL:"M28 166 L50 170 C49 192 46 212 42 230 L44 252 C44 264 34 268 28 262 C24 256 24 244 24 232 C24 210 26 188 28 166Z",
+faR:"M172 166 L150 170 C151 192 154 212 158 230 L156 252 C156 264 166 268 172 262 C176 256 176 244 176 232 C176 210 174 188 172 166Z",
+thL:"M58 220 C80 232 92 232 99 232 C99 266 96 296 92 320 L68 320 C62 292 58 256 58 220Z",
+thR:"M142 220 C120 232 108 232 101 232 C101 266 104 296 108 320 L132 320 C138 292 142 256 142 220Z",
+shL:"M68 322 L92 322 C93 350 91 372 89 390 C91 398 96 404 96 410 C96 416 84 418 74 418 C68 418 68 412 72 406 C72 398 72 392 71 386 C69 366 67 346 68 322Z",
+shR:"M132 322 L108 322 C107 350 109 372 111 390 C109 398 104 404 104 410 C104 416 116 418 126 418 C132 418 132 412 128 406 C128 398 128 392 129 386 C131 366 133 346 132 322Z"};
+var V={front:[["Oʻng yelka/qoʻl (yuqori)",P.uaL],["Chap yelka/qoʻl (yuqori)",P.uaR],["Oʻng bilak/kaft",P.faL],["Chap bilak/kaft",P.faR],["Oʻng son",P.thL],["Chap son",P.thR],["Oʻng boldir/tovon",P.shL],["Chap boldir/tovon",P.shR],["Chanoq",P.pel],["Qorin",P.abd],["Koʻkrak",P.chest],["Boʻyin",P.neck],["Bosh",P.head]],
+back:[["Chap yelka/qoʻl (orqa)",P.uaL],["Oʻng yelka/qoʻl (orqa)",P.uaR],["Chap tirsak/bilak (orqa)",P.faL],["Oʻng tirsak/bilak (orqa)",P.faR],["Chap son (orqa)",P.thL],["Oʻng son (orqa)",P.thR],["Chap boldir (orqa)",P.shL],["Oʻng boldir (orqa)",P.shR],["Dumba",P.pel],["Bel",P.abd],["Yuqori orqa (kurak)",P.chest],["Boʻyin orqasi",P.neck],["Ensa/bosh orqasi",P.head]]};
+var PRE='<ellipse class="ear" cx="73" cy="40" rx="4" ry="8"/><ellipse class="ear" cx="127" cy="40" rx="4" ry="8"/>';
+var POST={front:'<path class="h" d="M74 36 C71 14 86 5 100 5 C114 5 129 14 126 36 C120 24 110 19 100 19 C90 19 80 24 74 36Z"/><circle class="e" cx="90" cy="37" r="2.2"/><circle class="e" cx="110" cy="37" r="2.2"/><path class="d" d="M100 40 L98 50 L102 50 M92 59 Q100 63 108 59 M86 33 L94 32 M106 32 L114 33 M86 92 C92 97 97 97 100 95 C103 97 108 97 114 92 M72 124 Q86 132 98 124 M102 124 Q114 132 128 124 M100 100 L100 146 M100 166 m-2 0 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0"/>',
+back:'<path class="h" d="M73 38 C70 12 86 5 100 5 C114 5 130 12 127 38 C126 54 116 64 100 66 C84 64 74 54 73 38Z"/><path class="d" d="M100 88 L100 232 M72 104 C80 100 91 108 91 126 C80 130 72 122 72 104Z M128 104 C120 100 109 108 109 126 C120 130 128 122 128 104Z M84 214 Q100 224 116 214"/>'};
+var on={},NS="http://www.w3.org/2000/svg",$=function(i){return document.getElementById(i)};
+function build(id){var s=$(id);s.insertAdjacentHTML("afterbegin",PRE);V[id].forEach(function(d){var el=document.createElementNS(NS,"path");el.setAttribute("d",d[1]);
+el.setAttribute("class","r");el.setAttribute("tabindex","0");el.setAttribute("role","button");el.setAttribute("aria-label",d[0]);
+var t=document.createElementNS(NS,"title");t.textContent=d[0];el.appendChild(t);
+var tg=function(){var k=d[0];if(on[k]){delete on[k];el.classList.remove("on")}else{on[k]=1;el.classList.add("on")}chips()};
+el.addEventListener("click",tg);el.addEventListener("keydown",function(e){if(e.key=="Enter"||e.key==" "){e.preventDefault();tg()}});s.appendChild(el)});s.insertAdjacentHTML("beforeend",POST[id])}
+function chips(){var c=$("chips");c.innerHTML="";Object.keys(on).forEach(function(k){var s=document.createElement("span");s.className="chip";s.textContent=k;c.appendChild(s)})}
+build("front");build("back");
+$("pain").oninput=function(){$("pv").textContent=this.value};
+$("date").valueAsDate=new Date();
+function summary(){var g=function(i){return $(i).value.trim()||"—"};
+var sy=[].filter.call(document.querySelectorAll("#sym input:checked"),function(){return 1}).map(function(x){return x.parentNode.textContent}).join(", ")||"—";
+return ["DOCTOR AGENT — KASALLIK VARAQASI","Sana: "+g("date"),"",
+"Bemor: "+g("fio"),
+"Yosh: "+g("age")+" | Jins: "+g("sex"),"",
+"Ogʻriyotgan joylar: "+(Object.keys(on).join(", ")||"—"),
+"Shikoyat: "+g("main"),"Qachondan: "+g("since")+" | Ogʻriq: "+$("pain").value+"/10",
+"Belgilar: "+sy,"",
+"Surunkali kasalliklar: "+g("chron"),"Dorilar: "+g("drugs"),"Allergiya: "+g("allergy"),
+"Homiladorlik: "+g("preg"),"Qoʻshimcha: "+g("note"),"",
+"Shifokor: "+g("doc"),"Tashxis: "+g("diag")].join("\n")}
+function say(t){$("msg").textContent=t}
+$("copy").onclick=function(){var t=summary();try{navigator.clipboard.writeText(t).then(function(){say("Nusxalandi.")},function(){say("Nusxalab boʻlmadi — Chop etish tugmasidan foydalaning.")})}catch(e){say("Nusxalab boʻlmadi — Chop etish tugmasidan foydalaning.")}};
+$("print").onclick=function(){window.print()};
+$("clear").onclick=function(){document.querySelectorAll("input:not([type=checkbox]),textarea,select").forEach(function(e){e.value=""});document.querySelectorAll("#sym input").forEach(function(e){e.checked=false});$("pain").value=0;$("pv").textContent="0";on={};document.querySelectorAll(".r.on").forEach(function(e){e.classList.remove("on")});chips();$("date").valueAsDate=new Date();say("Varaqa tozalandi.")};
+</script>
+</body>
+</html>
